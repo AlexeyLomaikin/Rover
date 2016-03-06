@@ -23,4 +23,9 @@ public class GroundCell {
     public CellState getState(){
         return this.state;
     }
+
+    public void setState(CellState state){
+        if (state!=null)
+            this.state = state;
+    }
 }
