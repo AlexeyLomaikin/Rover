@@ -7,9 +7,17 @@ import ground.GroundVisorException;
  */
 public class Rover implements Moveable, Turnable{
     private Direction direction = Direction.EAST;
-    private GroundVisor visor = new GroundVisor();
     private int x;
     private int y;
+    private GroundVisor visor;
+
+    public Rover(){
+        this.visor = new GroundVisor();
+    }
+
+    public Rover(GroundVisor visor){
+       this.visor = (visor != null?visor:new GroundVisor());
+    }
 
     public GroundVisor getVisor(){
         return this.visor;

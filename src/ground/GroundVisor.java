@@ -5,7 +5,15 @@ import enums.CellState;
  * Created by AlexL on 06.03.2016.
  */
 public class GroundVisor {
-    private Ground ground = new Ground(1,1);
+    private Ground ground;
+
+    public GroundVisor(){
+        this.ground = new Ground(1,1);
+    }
+
+    public GroundVisor(Ground ground){
+        this.ground = (ground!=null?ground:new Ground(1,1));
+    }
 
     public void setGround(Ground ground){
         if (ground!=null)
