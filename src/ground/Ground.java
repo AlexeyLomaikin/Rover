@@ -29,11 +29,8 @@ public class Ground {
         return this.landscape;
     }
 
-    public GroundCell getCell(int x, int y){
-        if (x < width && y < length)
-            return this.landscape[x][y];
-        else
-            return null;
+    public GroundCell getCell(int x, int y) throws ArrayIndexOutOfBoundsException{
+        return this.landscape[x][y];
     }
 
 }
