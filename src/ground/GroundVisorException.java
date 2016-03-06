@@ -8,5 +8,4 @@ public class GroundVisorException extends RuntimeException {
     public GroundVisorException(){
         super("Invalid cell coordinates");
     }
-
 }

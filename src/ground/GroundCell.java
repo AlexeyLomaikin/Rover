@@ -17,15 +17,20 @@ public class GroundCell {
 
     public GroundCell(int x, int y, CellState state){
         this(x, y);
-        this.state = state;
+        this.state = (state != null ? state : CellState.FREE);
     }
 
     public CellState getState(){
         return this.state;
     }
-
     public void setState(CellState state){
-        if (state!=null)
+        if (state != null)
             this.state = state;
+    }
+    public int getX(){
+        return this.x;
+    }
+    public int getY(){
+        return this.y;
     }
 }

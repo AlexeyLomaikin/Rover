@@ -12,7 +12,7 @@ public class GroundVisor {
     }
 
     public GroundVisor(Ground ground){
-        this.ground = (ground!=null?ground:new Ground(1,1));
+        this.ground = (ground != null ? ground : new Ground(1,1));
     }
 
     public void setGround(Ground ground){
