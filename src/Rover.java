@@ -16,7 +16,7 @@ public class Rover implements Moveable, Turnable{
     }
 
     public Rover(GroundVisor visor){
-       this.visor = (visor != null?visor:new GroundVisor());
+       this.visor = (visor != null ? visor : new GroundVisor());
     }
 
     public GroundVisor getVisor(){
