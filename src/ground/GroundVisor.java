@@ -16,7 +16,7 @@ public class GroundVisor {
     }
 
     public void setGround(Ground ground){
-        if (ground!=null)
+        if (ground != null)
             this.ground = ground;
     }
 
@@ -25,8 +25,7 @@ public class GroundVisor {
             throw new GroundVisorException();
         else if ( x < 0 || y < 0)
             throw new GroundVisorException();
-        else {
+        else
             return ground.getCell(x,y).getState() != CellState.FREE;
-        }
     }
 }
