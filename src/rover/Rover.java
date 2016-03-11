@@ -65,7 +65,9 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
     public void executeProgramFile(String file){
         try(FileInputStream fis = new FileInputStream("CommandFile.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis)) ){
+
             this.commandParser.setReader(reader);
+
             RoverCommand command = this.commandParser.readNextCommand();
             while ( command != null){
                 command.execute();
