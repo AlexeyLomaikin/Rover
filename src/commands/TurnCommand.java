@@ -17,7 +17,7 @@ public class TurnCommand implements RoverCommand{
      */
     public TurnCommand(Turnable turnable, Direction direction) throws NullPointerException{
         if (turnable == null || direction == null)
-            throw new NullPointerException("Invalid args: rover is null");
+            throw new NullPointerException("Invalid args");
         else {
             this.turnable = turnable;
             this.direction = direction;
