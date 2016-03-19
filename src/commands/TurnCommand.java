@@ -3,8 +3,6 @@ package commands;
 import enums.Direction;
 import rover.Turnable;
 
-import java.util.ArrayList;
-
 /**
  * Created by AlexL on 11.03.2016.
  */

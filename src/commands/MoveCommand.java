@@ -2,8 +2,6 @@ package commands;
 
 import rover.Moveable;
 
-import java.io.FileReader;
-
 /**
  * Created by AlexL on 11.03.2016.
  */
