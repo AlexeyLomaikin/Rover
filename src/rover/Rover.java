@@ -1,15 +1,13 @@
 package rover;
 
-import commands.LoggingCommand;
-import commands.RoverCommand;
-import commands.RoverCommandParser;
-import commands.RoverCommandParserException;
+import commands.*;
 import enums.Direction;
 import ground.GroundVisor;
 import ground.GroundVisorException;
 
 import java.io.*;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 /**
  * Created by AlexL on 27.02.2016.
@@ -54,10 +52,10 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
             if (!this.visor.hasObstacles(x, y)) {
                 this.x = x;
                 this.y = y;
-                System.out.println("Rover moved to cell: " + x + " " + y);
+                Logger.getLogger(Rover.class.getName()).info("Rover moved to cell: " + x + " " + y);
             }
             else
-                System.out.println("Rover can't move to occupied cell: " + x + " " + y);
+                Logger.getLogger(Rover.class.getName()).info("Rover can't move to occupied cell: " + x + " " + y);
         } catch (GroundVisorException e) {
             e.printStackTrace();
         }
@@ -65,35 +63,19 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
     @Override
     public void turnTo(Direction direction){
         if (direction == null)
-            System.err.println("Rover can't turn : direction is null");
+            Logger.getLogger(Rover.class.getName()).info("Rover can't turn : direction is null");
         else {
             this.direction = direction;
-            System.out.println("Rover turned to " + direction);
+            Logger.getLogger(Rover.class.getName()).info("Rover turned to " + direction);
         }
     }
 
     @Override
     public void executeProgramFile(String filename){
-        try(FileInputStream fis = new FileInputStream(filename);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fis))
-        ){
-
-            this.commandParser.setReader(reader);
-
-            RoverCommand command = null;
-            do {
-                try{
-                    command = this.commandParser.readNextCommand();
-                    this.commands.addLast(command);
-                }catch(RoverCommandParserException parsEx){parsEx.printStackTrace();}
-            }while ( command != null);
-
-            while ( (command = this.commands.pollFirst()) != null ){
-                new LoggingCommand(command).execute();
-            }
-
-        }catch(IOException e){
-            e.printStackTrace();
+        new ImportCommand(this, filename).execute();
+        while ( this.commands.size() != 0) {
+            RoverCommand command = this.commands.pollFirst();
+            new LoggingCommand(command).execute();
         }
     }
 }

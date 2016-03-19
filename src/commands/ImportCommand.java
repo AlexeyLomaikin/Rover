@@ -38,6 +38,8 @@ public class ImportCommand implements RoverCommand {
             do {
                 try {
                     command = this.rover.getParser().readNextCommand();
+                    if ( command == null )
+                        break;
                     this.rover.getCommandList().addFirst(command);
                 } catch (RoverCommandParserException parsEx) {
                     parsEx.printStackTrace();
