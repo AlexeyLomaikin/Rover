@@ -31,6 +31,7 @@ public class ImportCommand implements RoverCommand {
             this.rover.getParser().setReader(reader);
 
             RoverCommand command = null;
+            //Start index to add commands from another file
             int i = 0;
 
             do {
@@ -39,6 +40,7 @@ public class ImportCommand implements RoverCommand {
                     if ( command == null )
                         break;
                     this.rover.getCommandList().add(i, command);
+                    //Add next command
                     i++;
                 } catch (RoverCommandParserException parsEx) {
                     parsEx.printStackTrace();
