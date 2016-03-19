@@ -9,6 +9,7 @@ import ground.GroundVisor;
 import ground.GroundVisorException;
 
 import java.io.*;
+import java.util.LinkedList;
 
 /**
  * Created by AlexL on 27.02.2016.
@@ -19,6 +20,7 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
     private int y;
     private RoverCommandParser commandParser;
     private GroundVisor visor;
+    private LinkedList<RoverCommand> commands = new LinkedList<>();
 
     public Rover(){
         this.visor = new GroundVisor();
@@ -37,6 +39,13 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
     public void setVisor(GroundVisor visor){
         if (visor != null)
             this.visor = visor;
+    }
+    public RoverCommandParser getParser(){
+        return this.commandParser;
+    }
+
+    public LinkedList<RoverCommand> getCommandList(){
+        return this.commands;
     }
 
     @Override
@@ -71,12 +80,19 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
 
             this.commandParser.setReader(reader);
 
-            RoverCommand command = this.commandParser.readNextCommand();
-            while ( command != null){
+            RoverCommand command = null;
+            do {
+                try{
+                    command = this.commandParser.readNextCommand();
+                    this.commands.addLast(command);
+                }catch(RoverCommandParserException parsEx){parsEx.printStackTrace();}
+            }while ( command != null);
+
+            while ( (command = this.commands.pollFirst()) != null ){
                 new LoggingCommand(command).execute();
-                command = this.commandParser.readNextCommand();
             }
-        }catch(IOException | RoverCommandParserException e){
+
+        }catch(IOException e){
             e.printStackTrace();
         }
     }

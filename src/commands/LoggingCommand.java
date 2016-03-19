@@ -22,6 +22,7 @@ public class LoggingCommand implements RoverCommand{
             Logger.getLogger(LoggingCommand.class.getName()).info("MoveCommand successfully executed!");
         else if(command instanceof TurnCommand)
             Logger.getLogger(LoggingCommand.class.getName()).info("TurnCommand successfully executed!");
-
+        else if(command instanceof ImportCommand)
+            Logger.getLogger(LoggingCommand.class.getName()).info("ImportCommand successfully executed!");
     }
 }

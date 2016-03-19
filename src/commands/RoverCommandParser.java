@@ -25,7 +25,7 @@ public class RoverCommandParser {
         this.reader = reader;
     }
 
-    public RoverCommand readNextCommand() throws RoverCommandParserException {
+    public RoverCommand readNextCommand() throws RoverCommandParserException  {
         if (reader == null)
             throw new RoverCommandParserException("Reader not set");
 
@@ -62,7 +62,7 @@ public class RoverCommandParser {
             else if( command.toLowerCase().startsWith("import") ){
                 try{
                     String filename = command.substring(7);
-                    return new ImportCommand();
+                    return new ImportCommand(this.rover, filename);
                 }catch( IndexOutOfBoundsException ex ){
                     throw new RoverCommandParserException("Incorrect format of import command");
                 }
