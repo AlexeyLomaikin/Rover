@@ -21,15 +21,6 @@ public class RoverCommandParser {
         }
     }
 
-    public RoverCommandParser(Rover rover, BufferedReader reader) throws NullPointerException{
-        if (rover == null || reader == null)
-            throw new NullPointerException("Invalid args");
-        else {
-            this.rover = rover;
-            this.reader = reader;
-        }
-    }
-
     public void setReader(BufferedReader reader){
         this.reader = reader;
     }
@@ -46,29 +37,38 @@ public class RoverCommandParser {
         }
 
         if (command != null) {
-            String[] params = command.split(" ");
-            if ( params.length < 2)
+            if ( command.split(" ").length < 2)
                 throw new RoverCommandParserException("Incorrect command");
 
-            if ( params[0].equals("move") && params.length == 3) {
+            if ( command.toLowerCase().startsWith("move") ) {
                 try{
+                    String[] params = command.split(" ");
                     int x = Integer.parseInt(params[1]);
                     int y = Integer.parseInt(params[2]);
                     return new MoveCommand(this.rover, x, y);
-                }catch(NumberFormatException ex){
+                }catch( NumberFormatException | ArrayIndexOutOfBoundsException ex ){
                     throw new RoverCommandParserException("Incorrect format of move command");
                 }
             }
-            else if( params[0].equals("turn") ) {
+            else if( command.toLowerCase().startsWith("turn") ) {
                 try {
+                    String[] params = command.split(" ");
                     Direction direction = Direction.valueOf(params[1]);
                     return new TurnCommand(this.rover, direction);
-                } catch (IllegalArgumentException e) {
+                } catch ( IllegalArgumentException | ArrayIndexOutOfBoundsException e ) {
                     throw new RoverCommandParserException("Incorrect format of turn command");
                 }
             }
+            else if( command.toLowerCase().startsWith("import") ){
+                try{
+                    String filename = command.substring(7);
+                    return new ImportCommand();
+                }catch( IndexOutOfBoundsException ex ){
+                    throw new RoverCommandParserException("Incorrect format of import command");
+                }
+            }
             else
-                throw new RoverCommandParserException("Unknown command");
+                throw new RoverCommandParserException("Unknown command '" + command + "'");
         }
         else
             return null;

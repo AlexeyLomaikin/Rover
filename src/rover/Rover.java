@@ -1,7 +1,9 @@
 package rover;
 
+import commands.LoggingCommand;
 import commands.RoverCommand;
 import commands.RoverCommandParser;
+import commands.RoverCommandParserException;
 import enums.Direction;
 import ground.GroundVisor;
 import ground.GroundVisorException;
@@ -62,18 +64,19 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
     }
 
     @Override
-    public void executeProgramFile(String file){
-        try(FileInputStream fis = new FileInputStream("CommandFile.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fis)) ){
+    public void executeProgramFile(String filename){
+        try(FileInputStream fis = new FileInputStream(filename);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(fis))
+        ){
 
             this.commandParser.setReader(reader);
 
             RoverCommand command = this.commandParser.readNextCommand();
             while ( command != null){
-                command.execute();
+                new LoggingCommand(command).execute();
                 command = this.commandParser.readNextCommand();
             }
-        }catch(IOException e){
+        }catch(IOException | RoverCommandParserException e){
             e.printStackTrace();
         }
     }

@@ -8,6 +8,6 @@ public class Main {
     public static void main(String[] args){
         Rover rover = new Rover();
         rover.getVisor().setGround(new Ground(5,5));
-        rover.executeProgramFile(".\\CommandFile.txt");
+        rover.executeProgramFile(".\\CommandFile1.txt");
     }
 }

@@ -1,4 +1,6 @@
 move 1 1
+import CommandFile2.txt
 turn WEST
 move 3 1
+
 
