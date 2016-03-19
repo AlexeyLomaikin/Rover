@@ -31,13 +31,15 @@ public class ImportCommand implements RoverCommand {
             this.rover.getParser().setReader(reader);
 
             RoverCommand command = null;
+            int i = 0;
 
             do {
                 try {
                     command = this.rover.getParser().readNextCommand();
                     if ( command == null )
                         break;
-                    this.rover.getCommandList().addLast(command);
+                    this.rover.getCommandList().add(i, command);
+                    i++;
                 } catch (RoverCommandParserException parsEx) {
                     parsEx.printStackTrace();
                 }
