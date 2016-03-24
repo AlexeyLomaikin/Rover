@@ -62,10 +62,10 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
             if (!this.visor.hasObstacles(x, y)) {
                 this.x = x;
                 this.y = y;
-                this.logger.info("Rover moved to cell: " + x + " " + y);
+                Rover.logger.info("Rover moved to cell: " + x + " " + y);
             }
             else
-                this.logger.info("Rover can't move to occupied cell: " + x + " " + y);
+                Rover.logger.info("Rover can't move to occupied cell: " + x + " " + y);
         } catch (GroundVisorException e) {
             e.printStackTrace();
         }
@@ -73,10 +73,10 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
     @Override
     public void turnTo(Direction direction){
         if (direction == null)
-            this.logger.info("Rover can't turn : direction is null");
+            Rover.logger.info("Rover can't turn : direction is null");
         else {
             this.direction = direction;
-            this.logger.info("Rover turned to " + direction);
+            Rover.logger.info("Rover turned to " + direction);
         }
     }
 

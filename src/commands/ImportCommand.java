@@ -18,9 +18,9 @@ public class ImportCommand implements RoverCommand {
     private String filename;
     private static Logger logger = Logger.getLogger(ImportCommand.class.getName());
 
-    public ImportCommand(Rover rover, String filename) {
+    public ImportCommand(Rover rover, String filename) throws IllegalArgumentException {
         if (rover == null || filename == null)
-            throw new NullPointerException("Invalid args");
+            throw new IllegalArgumentException("rover and filename can't be null");
         this.rover = rover;
         this.filename = filename;
     }

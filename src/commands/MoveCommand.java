@@ -12,9 +12,9 @@ public class MoveCommand implements RoverCommand {
     /**
      @throws NullPointerException if moveable is null
      */
-    public MoveCommand(Moveable moveable, int x, int y) throws NullPointerException{
+    public MoveCommand(Moveable moveable, int x, int y) throws IllegalArgumentException{
         if (moveable == null)
-            throw new NullPointerException("Invalid args: moveable is null");
+            throw new IllegalArgumentException("moveable can't be null");
         else {
             this.moveable = moveable;
             this.x = x;

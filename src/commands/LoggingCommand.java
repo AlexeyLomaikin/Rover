@@ -10,9 +10,9 @@ public class LoggingCommand implements RoverCommand{
     private RoverCommand command;
     private static Logger logger = Logger.getLogger(LoggingCommand.class.getName());
 
-    public LoggingCommand(RoverCommand command) throws NullPointerException{
+    public LoggingCommand(RoverCommand command) throws IllegalArgumentException{
         if ( command == null )
-            throw new NullPointerException("command is null");
+            throw new IllegalArgumentException("command can't be null");
         this.command = command;
     }
 

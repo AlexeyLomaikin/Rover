@@ -18,9 +18,9 @@ public class TextRoverCommandParser implements CommandParser {
     private Rover rover;
     private BufferedReader reader;
 
-    public TextRoverCommandParser(Rover rover) throws NullPointerException{
+    public TextRoverCommandParser(Rover rover) throws IllegalArgumentException{
         if (rover == null)
-            throw new NullPointerException("Invalid args: rover is null");
+            throw new IllegalArgumentException("rover can't be null");
         else
             this.rover = rover;
     }
