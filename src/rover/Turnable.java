@@ -13,5 +13,5 @@ public interface Turnable {
      @throws NullPointerException if Turnable is null or direction is null
      */
 
-    void turnTo(Direction direction) throws NullPointerException;
+    void turnTo(Direction direction);
 }
