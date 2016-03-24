@@ -50,10 +50,11 @@ public class ImportCommand implements RoverCommand {
 
                     if ( command == null )
                         break;
+                    //file "example1" can't import file "example1"
                     else if ( command instanceof ImportCommand){
                         ImportCommand curCommand = (ImportCommand)command;
                         if ( curCommand.getFilename().equals(this.filename) ) {
-                            this.logger.info("Can't execute command: " + curCommand.toString() +"" +
+                            ImportCommand.logger.info("Can't execute command: " + curCommand.toString() +"" +
                                     "\nCause: cycle in import\n");
                             continue;
                         }
