@@ -21,7 +21,10 @@ public class ImportCommand implements RoverCommand {
         this.rover = rover;
         this.filename = filename;
     }
-
+    @Override
+    public String toString(){
+        return "ImportCommand(filename = " + filename + ")";
+    }
     @Override
     public void execute() {
         try (FileInputStream fis = new FileInputStream(this.filename);

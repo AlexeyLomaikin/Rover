@@ -22,6 +22,10 @@ public class TurnCommand implements RoverCommand{
         }
     }
 
+    @Override
+    public String toString(){
+        return "TurnCommand(direction = " + direction.name() + ")";
+    }
 
     @Override
     public void execute() {
