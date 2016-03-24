@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 public class LoggingCommand implements RoverCommand{
 
     private RoverCommand command;
+    private static Logger logger = Logger.getLogger(LoggingCommand.class.getName());
 
     public LoggingCommand(RoverCommand command) throws NullPointerException{
         if ( command == null )
@@ -18,6 +19,6 @@ public class LoggingCommand implements RoverCommand{
     @Override
     public void execute(){
         this.command.execute();
-        Logger.getLogger(LoggingCommand.class.getName()).info(command.toString() + " successfully executed!\n");
+        this.logger.info(command.toString() + " successfully executed!\n");
     }
 }
