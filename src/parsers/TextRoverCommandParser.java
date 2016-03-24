@@ -1,6 +1,11 @@
-package commands;
+package parsers;
 
+import commands.ImportCommand;
+import commands.MoveCommand;
+import commands.RoverCommand;
+import commands.TurnCommand;
 import enums.Direction;
+import parsers.RoverCommandParserException;
 import rover.Rover;
 
 import java.io.BufferedReader;
@@ -9,23 +14,23 @@ import java.io.IOException;
 /**
  * Created by AlexL on 11.03.2016.
  */
-public class TextRoverCommandParser {
+public class TextRoverCommandParser implements CommandParser {
     private Rover rover;
     private BufferedReader reader;
 
     public TextRoverCommandParser(Rover rover) throws NullPointerException{
         if (rover == null)
             throw new NullPointerException("Invalid args: rover is null");
-        else {
+        else
             this.rover = rover;
-        }
     }
 
     public void setReader(BufferedReader reader){
         this.reader = reader;
     }
 
-    public RoverCommand readNextCommand() throws RoverCommandParserException  {
+    @Override
+    public RoverCommand readNextCommand() throws RoverCommandParserException {
         if (reader == null)
             throw new RoverCommandParserException("Reader not set");
 

@@ -4,6 +4,8 @@ import commands.*;
 import enums.Direction;
 import ground.GroundVisor;
 import ground.GroundVisorException;
+import parsers.TextRoverCommandParser;
+import parsers.XMLRoverCommandParser;
 
 import java.util.LinkedList;
 import java.util.logging.Logger;
@@ -15,19 +17,22 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
     private Direction direction = Direction.EAST;
     private int x;
     private int y;
-    private TextRoverCommandParser commandParser;
+    private TextRoverCommandParser textParser;
+    private XMLRoverCommandParser xmlParser;
     private GroundVisor visor;
     private LinkedList<RoverCommand> commands = new LinkedList<>();
     private static Logger logger = Logger.getLogger(Rover.class.getName());
 
     public Rover(){
         this.visor = new GroundVisor();
-        this.commandParser = new TextRoverCommandParser(this);
+        this.textParser = new TextRoverCommandParser(this);
+        this.xmlParser = new XMLRoverCommandParser(this);
     }
 
     public Rover(GroundVisor visor){
         this.visor = (visor != null ? visor : new GroundVisor());
-        this.commandParser = new TextRoverCommandParser(this);
+        this.textParser = new TextRoverCommandParser(this);
+        this.xmlParser = new XMLRoverCommandParser(this);
     }
 
     public GroundVisor getVisor(){
@@ -38,8 +43,13 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
         if (visor != null)
             this.visor = visor;
     }
-    public TextRoverCommandParser getParser(){
-        return this.commandParser;
+
+    public TextRoverCommandParser getTextParser(){
+        return this.textParser;
+    }
+
+    public XMLRoverCommandParser getXMLParser(){
+        return this.xmlParser;
     }
 
     public LinkedList<RoverCommand> getCommandList(){

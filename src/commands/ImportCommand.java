@@ -1,5 +1,6 @@
 package commands;
 
+import parsers.RoverCommandParserException;
 import rover.Rover;
 
 import java.io.BufferedReader;
@@ -38,7 +39,7 @@ public class ImportCommand implements RoverCommand {
              BufferedReader reader = new BufferedReader(new InputStreamReader(fis))
         ) {
 
-            this.rover.getParser().setReader(reader);
+            this.rover.getTextParser().setReader(reader);
 
             RoverCommand command = null;
             //Start index to add commands from another file
@@ -46,7 +47,7 @@ public class ImportCommand implements RoverCommand {
 
             do {
                 try {
-                    command = this.rover.getParser().readNextCommand();
+                    command = this.rover.getTextParser().readNextCommand();
 
                     if ( command == null )
                         break;
