@@ -15,18 +15,19 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
     private Direction direction = Direction.EAST;
     private int x;
     private int y;
-    private RoverCommandParser commandParser;
+    private TextRoverCommandParser commandParser;
     private GroundVisor visor;
     private LinkedList<RoverCommand> commands = new LinkedList<>();
+    private static Logger logger = Logger.getLogger(Rover.class.getName());
 
     public Rover(){
         this.visor = new GroundVisor();
-        this.commandParser = new RoverCommandParser(this);
+        this.commandParser = new TextRoverCommandParser(this);
     }
 
     public Rover(GroundVisor visor){
         this.visor = (visor != null ? visor : new GroundVisor());
-        this.commandParser = new RoverCommandParser(this);
+        this.commandParser = new TextRoverCommandParser(this);
     }
 
     public GroundVisor getVisor(){
@@ -37,7 +38,7 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
         if (visor != null)
             this.visor = visor;
     }
-    public RoverCommandParser getParser(){
+    public TextRoverCommandParser getParser(){
         return this.commandParser;
     }
 
@@ -51,10 +52,10 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
             if (!this.visor.hasObstacles(x, y)) {
                 this.x = x;
                 this.y = y;
-                Logger.getLogger(Rover.class.getName()).info("Rover moved to cell: " + x + " " + y);
+                this.logger.info("Rover moved to cell: " + x + " " + y);
             }
             else
-                Logger.getLogger(Rover.class.getName()).info("Rover can't move to occupied cell: " + x + " " + y);
+                this.logger.info("Rover can't move to occupied cell: " + x + " " + y);
         } catch (GroundVisorException e) {
             e.printStackTrace();
         }
@@ -62,10 +63,10 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
     @Override
     public void turnTo(Direction direction){
         if (direction == null)
-            Logger.getLogger(Rover.class.getName()).info("Rover can't turn : direction is null");
+            this.logger.info("Rover can't turn : direction is null");
         else {
             this.direction = direction;
-            Logger.getLogger(Rover.class.getName()).info("Rover turned to " + direction);
+            this.logger.info("Rover turned to " + direction);
         }
     }
 

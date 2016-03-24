@@ -9,11 +9,11 @@ import java.io.IOException;
 /**
  * Created by AlexL on 11.03.2016.
  */
-public class RoverCommandParser {
+public class TextRoverCommandParser {
     private Rover rover;
     private BufferedReader reader;
 
-    public RoverCommandParser(Rover rover) throws NullPointerException{
+    public TextRoverCommandParser(Rover rover) throws NullPointerException{
         if (rover == null)
             throw new NullPointerException("Invalid args: rover is null");
         else {

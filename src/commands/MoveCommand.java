@@ -23,12 +23,12 @@ public class MoveCommand implements RoverCommand {
     }
 
     @Override
-    public void execute(){
-        this.moveable.move(this.x, this.y);
+    public String toString(){
+        return "MoveCommand(x = " + x + ", y = " + y + ")";
     }
 
     @Override
-    public String toString(){
-        return "MoveCommand(x = " + x + ", y = " + y + ")";
+    public void execute(){
+        this.moveable.move(this.x, this.y);
     }
 }
