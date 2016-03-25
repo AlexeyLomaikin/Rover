@@ -14,7 +14,6 @@ import rover.Rover;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -70,7 +69,10 @@ public class XMLRoverCommandParser implements CommandParser {
             return null;
 
         Node commandNode = this.commandNodes.pollFirst();
-        if ( commandNode.getNodeType() == Node.ELEMENT_NODE ) {
+
+        if ( commandNode.getNodeType() != Node.ELEMENT_NODE )
+            throw new RoverCommandParserException("Invalid xml!");
+        else{
             Element el = (Element) commandNode;
             String command = el.getTagName();
             if ( command.toLowerCase().startsWith("move") ) {
@@ -104,6 +106,5 @@ public class XMLRoverCommandParser implements CommandParser {
             else
                 throw new RoverCommandParserException("Unknown command '" + command + "'");
         }
-        return null;
     }
 }
