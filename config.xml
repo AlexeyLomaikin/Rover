@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <commands>
- <move>
+ <command>
+  <type>move</type>
   <x>1</x>
   <y>1</y>
- </move>
- <import>
+ </command>
+ <command>
+  <type>import</type>
   <file>CommandFile2.txt</file>
- </import>
- <turn>
+ </command>
+ <command>
+  <type>turn</type>
   <direction>WEST</direction>
- </turn>
- <move>
+ </command>
+ <command>
+  <type>move</type>
   <x>3</x>
   <y>1</y>
- </move>
+ </command>
 </commands>

@@ -35,7 +35,7 @@ public class XMLRoverCommandParser implements CommandParser {
         if ( filename == null )
             throw new IllegalArgumentException("Filename can't be null");
         else if ( !filename.matches("^.+\\.xml$") )
-            throw new IllegalArgumentException("Invalid filename");
+            throw new IllegalArgumentException("Invalid file format");
         try{
             File file = new File(filename);
             if( !file.exists() || file.length() == 0 )
@@ -57,8 +57,12 @@ public class XMLRoverCommandParser implements CommandParser {
             NodeList commandNodes = commandsNodes.item(0).getChildNodes();
             for ( int i = 0; i < commandNodes.getLength(); i++ ) {
                 Node commandNode = commandNodes.item(i);
-                if (commandNode.getNodeType() == Node.ELEMENT_NODE)
+                if ( commandNode.getNodeType() == Node.ELEMENT_NODE ) {
+                    String tag = ((Element)commandNode).getTagName();
+                    if ( !tag.equals("command") )
+                        throw new RoverCommandParserException("Not valid xml!");
                     this.commandNodes.add(commandNode);
+                }
             }
         }
     }
