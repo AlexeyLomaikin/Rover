@@ -23,14 +23,8 @@ public class ImportCommand implements RoverCommand {
             throw new IllegalArgumentException("rover and filename can't be null");
         if (!filename.matches("^.+\\.(txt|xml)$"))
             throw new IllegalArgumentException("Incorrect file format");
-
-        try{
-            String fullFileName = new File(filename).getCanonicalPath();
-            this.rover = rover;
-            this.filename = fullFileName;
-        }catch (IOException e){
-            throw new IllegalArgumentException("Invalid file name");
-        }
+        this.rover = rover;
+        this.filename = filename;
     }
 
     @Override
@@ -66,7 +60,12 @@ public class ImportCommand implements RoverCommand {
             throw new IllegalArgumentException("parser can't be null");
 
         //put new importing filename in map
-        this.rover.getExecuteFilesInfo().put(this.filename, 0);
+        try{
+            String fullFileName = new File(this.filename).getCanonicalPath();
+            this.rover.getExecuteFilesInfo().put(fullFileName, 0);
+        }catch (IOException e){
+            throw new IllegalArgumentException("Invalid file name");
+        }
 
         RoverCommand command = null;
         //Start index to add commands from another file
