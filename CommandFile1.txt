@@ -1,4 +1,4 @@
 move 1 1
-import CommandFile2.txt
+import .\config.xml
 turn WEST
 move 3 1

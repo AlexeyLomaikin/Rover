@@ -5,7 +5,7 @@
   <y>1</y>
  </command>
  <command type="import">
-  <file>CommandFile2.txt</file>
+  <file>CommandFile1.txt</file>
  </command>
  <command type="turn">
   <direction>WEST</direction>

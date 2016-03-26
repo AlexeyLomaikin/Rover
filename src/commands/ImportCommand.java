@@ -24,23 +24,24 @@ public class ImportCommand implements RoverCommand {
     public ImportCommand(Rover rover, String filename) throws IllegalArgumentException {
         if (rover == null || filename == null)
             throw new IllegalArgumentException("rover and filename can't be null");
-        if ( !filename.matches("^.+\\.(txt|xml)$") )
+        if (!filename.matches("^.+\\.(txt|xml)$"))
             throw new IllegalArgumentException("Incorrect file format");
         this.rover = rover;
         this.filename = filename;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return "ImportCommand(filename = " + filename + ")";
     }
 
-    public String getFilename(){
+    public String getFilename() {
         return this.filename;
     }
 
     @Override
-    public void execute() {
-        if ( this.filename.endsWith(".txt") )
+    public void execute() throws IllegalArgumentException {
+        if (this.filename.endsWith(".txt"))
             try (FileInputStream fis = new FileInputStream(this.filename);
                  BufferedReader reader = new BufferedReader(new InputStreamReader(fis))
             ) {
@@ -50,16 +51,19 @@ public class ImportCommand implements RoverCommand {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        else if ( this.filename.endsWith(".xml")){
+        else if (this.filename.endsWith(".xml")) {
             XMLRoverCommandParser parser = this.rover.getXMLParser();
             parser.setFile(this.filename);
             this.importCommands(parser);
         }
     }
 
-    private void importCommands(CommandParser parser) throws IllegalArgumentException{
-        if ( parser == null )
+    private void importCommands(CommandParser parser) throws IllegalArgumentException {
+        if (parser == null)
             throw new IllegalArgumentException("parser can't be null");
+
+        //put new importing filename in map
+        this.rover.getExecuteFilesInfo().put(this.filename, 0);
 
         RoverCommand command = null;
         //Start index to add commands from another file
@@ -71,23 +75,25 @@ public class ImportCommand implements RoverCommand {
 
                 if ( command == null )
                     break;
-                    //file "example1" can't import file "example1"
-                else if ( command instanceof ImportCommand){
-                    ImportCommand curCommand = (ImportCommand)command;
-                    if ( curCommand.getFilename().equals(this.filename) ) {
-                        ImportCommand.logger.info("Can't execute command: " + curCommand.toString() +"" +
-                                "\nCause: cycle in import\n");
+                if ( command instanceof ImportCommand ){
+                    String filename = ((ImportCommand)command).getFilename();
+                    //cyclic import
+                    if ( this.rover.getExecuteFilesInfo().containsKey(filename) ) {
+                        ImportCommand.logger.info("Error: cyclic import " + this.filename + " -> " + filename + "\n");
                         continue;
                     }
                 }
+                //Add next command
 
                 this.rover.getCommandList().add(i, command);
-                //Add next command
                 i++;
             } catch (RoverCommandParserException parsEx) {
                 parsEx.printStackTrace();
             }
         } while (command != null);
+
+        //update number of commands in this file + commands in it parent files
+        this.rover.updateExecuteFilesInfo(i);
     }
 
 }
