@@ -6,10 +6,7 @@ import parsers.TextRoverCommandParser;
 import parsers.XMLRoverCommandParser;
 import rover.Rover;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.logging.Logger;
 
 /**
@@ -26,8 +23,14 @@ public class ImportCommand implements RoverCommand {
             throw new IllegalArgumentException("rover and filename can't be null");
         if (!filename.matches("^.+\\.(txt|xml)$"))
             throw new IllegalArgumentException("Incorrect file format");
-        this.rover = rover;
-        this.filename = filename;
+
+        try{
+            String fullFileName = new File(filename).getCanonicalPath();
+            this.rover = rover;
+            this.filename = fullFileName;
+        }catch (IOException e){
+            throw new IllegalArgumentException("Invalid file name");
+        }
     }
 
     @Override

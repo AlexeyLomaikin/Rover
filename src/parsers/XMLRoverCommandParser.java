@@ -105,12 +105,12 @@ public class XMLRoverCommandParser implements CommandParser {
                 throw new RoverCommandParserException("Incorrect format of turn command");
             }
         }
-        else if( commandType.toLowerCase().equals("import") ){
-            try{
+        else if( commandType.toLowerCase().equals("import") ) {
+            try {
                 List<Node> params = this.parseParams(commandNode);
                 String filename = params.get(0).getTextContent();
                 return new ImportCommand(this.rover, filename);
-            }catch( ArrayIndexOutOfBoundsException | IllegalArgumentException e ){
+            } catch (ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
                 throw new RoverCommandParserException("Incorrect format of import command");
             }
         }

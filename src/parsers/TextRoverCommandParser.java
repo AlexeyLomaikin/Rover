@@ -9,6 +9,7 @@ import parsers.RoverCommandParserException;
 import rover.Rover;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -67,7 +68,7 @@ public class TextRoverCommandParser implements CommandParser {
             else if( command.toLowerCase().startsWith("import") ){
                 try{
                     String filename = command.substring(7);
-                    return new ImportCommand(this.rover, filename);
+                    return new ImportCommand(this.rover,filename);
                 }catch( IndexOutOfBoundsException ex ){
                     throw new RoverCommandParserException("Incorrect format of import command");
                 }
