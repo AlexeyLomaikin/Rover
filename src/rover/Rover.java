@@ -27,7 +27,6 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
         this.visor = new GroundVisor();
         this.textParser = new TextRoverCommandParser(this);
         this.xmlParser = new XMLRoverCommandParser(this);
-        xmlParser.setFile("./config.xml");
     }
 
     public Rover(GroundVisor visor){
@@ -83,7 +82,7 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
 
     @Override
     public void executeProgramFile(String filename){
-        new ImportCommand(this, filename).execute();
+        new LoggingCommand(new ImportCommand(this, filename)).execute();
         while ( this.commands.size() != 0) {
             RoverCommand command = this.commands.pollFirst();
             new LoggingCommand(command).execute();

@@ -57,7 +57,7 @@ public class ImportCommand implements RoverCommand {
         }
     }
 
-    private void importCommands(CommandParser parser){
+    private void importCommands(CommandParser parser) throws IllegalArgumentException{
         if ( parser == null )
             throw new IllegalArgumentException("parser can't be null");
 
@@ -67,7 +67,7 @@ public class ImportCommand implements RoverCommand {
 
         do {
             try {
-                command = this.rover.getTextParser().readNextCommand();
+                command = parser.readNextCommand();
 
                 if ( command == null )
                     break;
