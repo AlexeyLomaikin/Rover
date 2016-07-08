@@ -15,6 +15,10 @@ public class GroundVisor {
         this.ground = (ground != null ? ground : new Ground(1,1));
     }
 
+    public Ground getGround(){
+        return this.ground;
+    }
+
     public void setGround(Ground ground){
         if (ground != null)
             this.ground = ground;

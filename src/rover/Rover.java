@@ -1,7 +1,9 @@
 package rover;
 
 import commands.*;
+import enums.CellState;
 import enums.Direction;
+import ground.Ground;
 import ground.GroundVisor;
 import ground.GroundVisorException;
 import parsers.TextRoverCommandParser;
@@ -80,6 +82,8 @@ public class Rover implements Moveable, Turnable, ProgramFileAware {
             if (!this.visor.hasObstacles(x, y)) {
                 this.x = x;
                 this.y = y;
+                Ground ground =  this.visor.getGround();
+                ground.getCell(x, y).setState(CellState.OCCUPIED);
                 Rover.logger.info("Rover moved to cell: " + x + " " + y);
             }
             else
